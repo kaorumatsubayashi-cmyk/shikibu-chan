@@ -579,6 +579,27 @@ footer a{color:var(--kikyo)}
     ].join('\n');
   }
 
+  function number(text) {
+    var i = 0;
+    return text.replace(/## Rule # —/g, function () { i++; return '## Rule ' + i + ' —'; });
+  }
+
+  function rulesGloss(hasHonka) {
+    var a = ['## Rule # — Say only what is actually there'];
+    a.push('The commentary is a gloss, not an essay. A gloss that invents is worse than a gloss that is short.');
+    if (hasHonka) {
+      a.push('Name the 本歌 only because the sender supplied one. Say what was taken from it, and add no second source you were not given.');
+    } else {
+      a.push('NO 本歌 WAS GIVEN. Do not name one. Do not name a poet, an anthology, a 百人一首 number, or any other source anywhere in your answer. An echo you happen to hear in your own wording is not a 本歌 — every poem written in this register resembles something. Where the commentary would name a source, write 「本歌取りはしてゐない」 and move on.');
+    }
+    a.push('Do not credit a technique the poem does not actually perform. A 掛詞 exists only where BOTH meanings read grammatically in the line as written: put each meaning into the sentence in turn and check that it holds. If only one reading works, the word is not a 掛詞 and must not be called one.');
+    a.push('句切れ falls only where a sentence genuinely ends — a 終止形, a 命令形, a 係り結び, or a 体言止め. 〜ば, 〜て, 〜つつ, 〜ども and 連用中止法 carry the sentence onward and do not break the poem. If it runs unbroken to the close, write 句切れなし.');
+    a.push('Never state a poet, a title, or a quoted line you are not certain of. Being unsure is not a reason to guess; it is a reason to leave the sentence out. A short accurate gloss beats a confident wrong one.');
+    a.push('');
+    a.push('');
+    return a.join('\n');
+  }
+
   function tag(name, body) {
     return '<' + name + '>\n' + String(body).trim() + '\n</' + name + '>';
   }
@@ -602,7 +623,7 @@ footer a{color:var(--kikyo)}
 
   function rulesForm() {
     return [
-      '## Rule 1 — Form is not negotiable',
+      '## Rule # — Form is not negotiable',
       'Exactly 5-7-5-7-7, counted in Japanese mora (音数): 拗音 (きゃ・しゅ) counts as one; 撥音「ん」, 促音「っ」 and long vowels each count as one.',
       'Count every 句 before you present a poem. If a 句 is off, rewrite it — do not present a poem you have not counted.',
       '字余り is allowed at most once per poem, only in the 初句 or the 第三句, and only where a vowel-initial mora makes it sound natural. 字足らず is never allowed.',
@@ -614,7 +635,7 @@ footer a{color:var(--kikyo)}
 
   function rulesLang() {
     return [
-      '## Rule 2 — Classical Japanese, and nothing else',
+      '## Rule # — Classical Japanese, and nothing else',
       'Write in 文語 (classical Japanese) with 歴史的仮名遣い in the reading line. Handle 助動詞 (けり・ぬ・つ・む・らむ・けむ・べし・なり・めり・まし・じ) correctly, and observe 係り結び: ぞ・なむ・や・か take the 連体形, こそ takes the 已然形.',
       'Forbidden inside the poem: katakana loanwords, English, modern nouns (スマホ・電車・会社・駅・メール), modern abstractions (ストレス・モチベーション), slang, and punctuation marks.',
       'When the situation involves modern things, translate them into what the Heian eye could see: a message becomes 文・玉章・ことづて, a phone that stays silent becomes 音づれ絶ゆ, a train or a commute becomes 道・車・行き来, an office becomes 宮仕へ・司, a photograph becomes 影・面影, night-time scrolling becomes 夜もすがら.',
@@ -626,7 +647,7 @@ footer a{color:var(--kikyo)}
 
   function rulesMiyabi() {
     return [
-      '## Rule 3 — 雅 (miyabi) above all',
+      '## Rule # — 雅 (miyabi) above all',
       'What the sender wrote may be blunt, furious, needy, jealous, petty, or plainly indecent. That is good raw material and you must not flinch from it — but it must never appear on the surface of the poem.',
       'Transpose the feeling into the world: season, weather, moon, dew, frost, mist, waves, thin ice, smoke, plum, pine, cuckoo, sleeves (袖), dreams (夢).',
       'Anger goes cold — 霜, 氷, 秋風, 有明の月. Longing goes to 露, 袖, 夢, 待つ/松. Refusal goes to 峰の雲, 沖つ波, 散る花. Reproach is delivered as an observation about the weather, never as an accusation.',
@@ -639,7 +660,7 @@ footer a{color:var(--kikyo)}
 
   function rulesArrive() {
     return [
-      '## Rule 4 — It has to arrive',
+      '## Rule # — It has to arrive',
       'This is a message, not an ornament. It will be sent to an actual person today.',
       'The recipient, who has no classical training, must be able to feel the 本意 from the poem and its 詞書, and to understand it completely once they read the 現代語訳.',
       'Elegance that fails to communicate is a failure. Do not bury the sense so deep that only you can find it.',
@@ -652,7 +673,7 @@ footer a{color:var(--kikyo)}
     var chosen = [];
     var boxes = document.querySelectorAll('#tech-chips input:checked');
     for (var i = 0; i < boxes.length; i++) chosen.push(boxes[i].value);
-    var s = '## Rule 5 — Technique\n';
+    var s = '## Rule # — Technique\n';
     if (chosen.length) {
       s += 'The sender has asked for these. Use each one properly, and name it in the commentary:\n';
       for (var j = 0; j < chosen.length; j++) {
@@ -675,7 +696,7 @@ footer a{color:var(--kikyo)}
     var src = $('f-honka').value.trim();
     if (!on || !src) return '';
     var kind = $('f-honkatype').value;
-    var s = '## Rule 6 — 本歌取り from the source below\n';
+    var s = '## Rule # — 本歌取り from the source below\n';
     s += 'The sender wants the poem to lean on this existing work' + (kind ? ' (' + HONKATYPE[kind] + ')' : '') + ':\n\n';
     s += tag('honka', src) + '\n\n';
     s += 'If it is a classical waka, work in the traditional way: borrow one 句, or two at most, keep the borrowed phrasing recognisable, and make the new poem mean something the original did not. Never reuse the source\'s 結句 as your own 結句.\n';
@@ -686,6 +707,8 @@ footer a{color:var(--kikyo)}
     s += 'Name the source and say exactly what was taken from it in the 解説.\n\n';
     return s;
   }
+
+  function honkaGiven() { return $('t-honka').checked && !!$('f-honka').value.trim(); }
 
   function outputSpec(n, isReply) {
     var s = '# OUTPUT\n\n';
@@ -705,7 +728,7 @@ footer a{color:var(--kikyo)}
     s += '【現代語訳】\n';
     s += 'Plain modern Japanese, one or two sentences. Nothing withheld.\n\n';
     s += '【解説】\n';
-    s += 'The register of a classical-Japanese textbook: 常体, level, unhurried, no exclamation, no 「です・ます」, and no praise of the poem. Three to six sentences. State where the 句切れ falls; name each technique and the exact word it works on; for a 掛詞, say which two meanings the word pivots between; identify the 本歌 and what was taken from it; and give the 主題 in a phrase. Write a gloss, not a review.\n\n';
+    s += 'The register of a classical-Japanese textbook: 常体, level, unhurried, no exclamation, no 「です・ます」, and no praise of the poem. Three to six sentences. State where the 句切れ falls, or that there is none; name each technique and the exact word it works on; for a 掛詞, give the two meanings and confirm that both read grammatically in the line as written' + (honkaGiven() ? '; identify the 本歌 the sender supplied and say what was taken from it' : '') + '; and give the 主題 in a phrase. Write a gloss, not a review, and claim nothing the poem does not actually do.\n\n';
     s += '【添へ文】\n';
     s += 'One short line of ordinary modern Japanese, twenty-five characters or fewer, to sit under the poem when it is sent. Light. It does not explain the poem.\n\n';
     s += '【そのまま送る】\n';
@@ -775,14 +798,15 @@ footer a{color:var(--kikyo)}
     p += rulesArrive();
     p += techSection();
     p += honkaSection();
+    p += rulesGloss(honkaGiven());
 
     if (isReply) {
-      p += '## Rule 7 — The manners of a 返歌\n';
+      p += '## Rule # — The manners of a 返歌\n';
       p += 'A reply poem must take up at least one word or one image from the poem it answers, and turn it — agree with it, invert it, or carry it a step further. Answer in the same season and the same register. Do not simply repeat the other poem\'s 掛詞 unless you are turning it against them. The pleasure of a 返歌 is in the turn.\n\n';
     }
 
     p += outputSpec(n, isReply);
-    return p;
+    return number(p);
   }
 
   function buildToku() {
@@ -811,10 +835,10 @@ footer a{color:var(--kikyo)}
     p += '# OUTPUT\n\n';
     p += 'Write the whole answer in Japanese. Use these headings exactly, in this order.\n\n';
     p += '【いただいた歌】\nThe poem set out cleanly, one line, a space between each 句, with its reading in hiragana beneath, prefixed 「よみ：」.\n\n';
-    p += '【出典】\nThe source if it is a known poem — poet, work, and your degree of confidence. If it appears to be newly composed, say so in one line.\n\n';
+    p += '【出典】\nOnly if you are genuinely certain, name the poem — poet, work, and where it is collected. If you are not certain, or if it appears to be newly composed, say 「出典未詳」 or 「新しく詠まれたものと見られる」 in one line and stop. Never guess at a poet or an anthology, and never offer a source you are only half sure of: a wrong attribution is worse than none.\n\n';
     p += '【語釈】\nA word-by-word gloss of the difficult terms, in the manner of a school text: 「〜」＝〜, one per line, in the order they appear.\n\n';
     p += '【現代語訳】\nPlain modern Japanese, one or two sentences.\n\n';
-    p += '【技法】\nThe devices used and where. Textbook register — 常体, level, no praise. For each 掛詞, both meanings.\n\n';
+    p += '【技法】\nThe devices actually used, and where. Textbook register — 常体, level, no praise. For each 掛詞, give both meanings and confirm that both read grammatically in the line as written; if only one holds, it is not a 掛詞. 句切れ only where a sentence truly ends (終止形・命令形・係り結び・体言止め); 〜ば and 〜て do not break a poem. If the poem uses no named device, say so plainly rather than finding one.\n\n';
     p += '【含意】\nWhat the poet is really saying, and what they want. Three to five sentences, in plain modern Japanese, addressed to the reader.\n\n';
     p += '【相手の心もち】\nOne or two sentences on the temperature of the poem — warm, cool, playful, reproachful, formal, urgent — and how quickly an answer seems to be expected.\n\n';
     p += '【返しの糸口】\nThree possible angles for a reply, one line each, each naming the image or word from this poem that the reply could take up and turn.\n';
